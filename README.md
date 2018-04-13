@@ -2,6 +2,8 @@
 
 > Aid addon installation by running a codemod on the host application
 
+![Demo of installing an addon and automatically running a codemod](./docs/demo.gif)
+
 ## Motivation
 
 In my experience, Ember addon authors often have a choice to make around providing a great installation experience for their users:
@@ -11,8 +13,6 @@ In my experience, Ember addon authors often have a choice to make around providi
 - Add a blueprint that defines files that override existing default ones, blowing away the users' changes and forcing them to clean up the difference
 
 This library provides an alternative; using a codemod, modify the user's existing files while allowing them to approve each file change individually.
-
-![Demo of installing an addon and automatically running a codemod](./docs/demo.gif)
 
 ## Usage
 
