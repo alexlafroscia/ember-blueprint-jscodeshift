@@ -6,10 +6,25 @@
   "author": "Alex LaFroscia <alex@lafroscia.com>",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": ">= 6.0"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
-    "broccoli": "^1.1.4",
+    "broccoli-builder": "^0.18.11",
     "broccoli-funnel": "^2.0.1",
-    "broccoli-jscodeshift": "^1.0.0",
-    "tree-sync": "^1.2.2"
+    "broccoli-jscodeshift": "^1.0.1",
+    "debug": "^3.1.0",
+    "fs-tree-diff": "^0.5.7",
+    "walk-sync": "^0.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.12.0"
   }
 }
