@@ -5,5 +5,11 @@
   "main": "index.js",
   "author": "Alex LaFroscia <alex@lafroscia.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "broccoli": "^1.1.4",
+    "broccoli-funnel": "^2.0.1",
+    "broccoli-jscodeshift": "^1.0.0",
+    "tree-sync": "^1.2.2"
+  }
 }
