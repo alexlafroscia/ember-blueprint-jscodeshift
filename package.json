@@ -1,6 +1,6 @@
 {
   "name": "ember-blueprint-jscodeshift",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Run a jscodeshift as part of an Ember blueprint",
   "main": "index.js",
   "author": "Alex LaFroscia <alex@lafroscia.com>",
