@@ -15,7 +15,7 @@ function runTransform(transform) {
     include: ['**/*.*', '**/.gitkeep']
   });
   tree = new JSCodeShift(tree, {
-    transform: path.join(__dirname, '../lib/transforms/install-custom-events.js')
+    transform: transform.match(/http?s:\/\//) ? transform : path.resolve(this.path, transform)
   });
 
   const builder = new Builder(tree);
