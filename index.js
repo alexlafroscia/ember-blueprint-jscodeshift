@@ -2,6 +2,7 @@ const path = require('path');
 
 const { Builder } = require('broccoli-builder');
 const Funnel = require('broccoli-funnel');
+const MergeTrees = require('broccoli-merge-trees');
 const JSCodeShift = require('broccoli-jscodeshift');
 const walkSync = require('walk-sync');
 const FSTreeDiff = require('fs-tree-diff');
@@ -67,21 +68,44 @@ module.exports = function(blueprint) {
         include: SAFE_PATHS
       });
 
-      const transforms = this.transforms.map(
-        transform =>
-          transform.match(/http?s:\/\//)
-            ? transform
-            : path.resolve(this.path, transform)
-      );
+      const transforms = this.transforms.map(({ match, transform }) => {
+        transform = transform.match(/http?s:\/\//)
+          ? transform
+          : path.resolve(this.path, transform);
+
+        if (typeof match === 'string') {
+          match = [match];
+        }
+
+        match = match.map(pattern => {
+          if (pattern.indexOf('**/') !== 0) {
+            const newFilePattern = `**/${pattern}`;
+            debug(
+              '%o does not start with the expected pattern, modifying it to %o',
+              pattern,
+              newFilePattern
+            );
+
+            return newFilePattern;
+          }
+
+          return pattern;
+        });
+
+        return { match, transform };
+      }, []);
 
       debug('Running transforms: %o', transforms);
 
-      const transformedTree = transforms.reduce(
-        (projectTree, transform) => new JSCodeShift(projectTree, { transform }),
-        projectTree
-      );
+      const transformedTrees = transforms.map(({ match, transform }) => {
+        const subTree = new Funnel(projectTree, {
+          include: match
+        });
 
-      const builder = new Builder(transformedTree);
+        return new JSCodeShift(subTree, { transform });
+      });
+
+      const builder = new Builder(new MergeTrees(transformedTrees));
 
       return builder.build().then(({ directory }) => {
         this._builderPath = directory;
